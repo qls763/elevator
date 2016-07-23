@@ -1,0 +1,188 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+  <title> 电梯滑动,懒加载 </title>
+  <meta charset="UTF-8">
+ </head>
+    <style>
+    * {
+        margin: 0;
+        padding: 0;
+    }
+    
+    li {
+        list-style: none;
+    }
+    
+    a {
+        text-decoration: none;
+        outline: none;
+        color: black;
+    }
+    
+    a:active {
+        outline: 0;
+    }
+    
+    .floor-list {
+        margin: 0 auto;
+        width: 1210px;
+    }
+
+    .top {
+        margin: 0 auto;
+        height: 300px;
+        background: #ff5722;
+        width: 1210px;
+    }
+
+    .header {
+        margin: 0 auto;
+        height: 400px;
+        background: #03A9F4;
+        width: 1210px;
+    }
+    
+    .floor1 {
+        height: 400px;
+        background: orange ;
+    }
+    
+    .floor2 {
+        height: 300px;
+        background: blue;
+    }
+    
+    .floor3 {
+        height: 500px;
+        background: green;
+    }
+    
+    .floor4 {
+        height: 400px;
+        background: red;
+    }
+    
+    .floor5 {
+        height: 200px;
+        background: pink;
+    }
+    
+    .footer {
+        margin: 0 auto;
+        background: #03A9F4;
+        width: 1210px;
+        height: 600px;
+    }
+    
+    /***************左侧楼层定位***************/
+    .elevator {
+        display: none;
+        overflow: hidden;
+        width: 40px;
+        overflow: visible;
+        position: fixed;
+        right: 10%;
+        top: 100px;
+        z-index: 3333;
+    }
+    .elevator ul {
+        background-color: rgba(255, 255, 255, 0.8);
+        overflow: hidden;
+    }
+    .elevator li {
+        cursor: pointer;
+        height: 30px;
+        line-height: 30px;
+        margin-top: -1px;
+        overflow: hidden;
+        text-align: center;
+        width: 40px;
+    }
+    .elevator li a {
+        background: rgba(0, 0, 0, 0) ;
+        color: #625351;
+        display: block;
+        font-family: Arial;
+        font-size: 14px;
+        height: 30px;
+        margin: 0 auto;
+        width: 40px;
+    }
+    .elevator li a:hover {
+        background: #c81623 none repeat scroll 0 0;
+        color: #fff;
+        text-decoration: none;
+    }
+    .elevator li .etitle {
+        color: #fff;
+        display: none;
+        font-size: 12px;
+        height: 30px;
+        width: 40px;
+    }
+    .elevator li.current a {
+        display: none;
+    }
+    .elevator li.current .etitle {
+        color: #c81623;
+        display: block;
+    }
+    .elevator li.current .etitle:hover {
+        color: #fff;
+    }
+    .elevator li.hover a, .elevator li:hover a {
+        display: none;
+    }
+    .elevator li.hover .etitle, .elevator li:hover .etitle {
+        color: #fff;
+        display: block;
+    }
+
+    .lazy-fn-done{
+        background:rgba(0, 0, 0, 0) none repeat scroll 0 0;
+    }
+    </style>
+</head>
+
+<body>
+	<div class="top">
+		<h1>头部向下滑动，第一个楼层模块快出现时, 导航栏出现</h1>
+	</div>
+    <div class="header">
+        <h1>头部向下滑动，第一个楼层模块快出现时, 导航栏出现</h1>
+    </div>    
+    <div class="floor-list">
+        <div class="lazy-floor floor1" data-path="data.json">
+            
+        </div>
+        <div class="lazy-floor floor2" data-path="data.json">
+            
+        </div>
+        <div class="lazy-floor floor3" data-path="data.json">
+            
+        </div>
+        <div class="lazy-floor floor4" data-path="data.json">
+            
+        </div>
+        <div class="lazy-floor floor5" data-path="data.json">
+            
+        </div>
+
+    </div>
+    <div class="elevator" id="elevator" style="display:none">
+        <ul>
+            <li><a href="javascript:;" >1F</a> <a href="javascript:;" class="etitle">floor1</a></li>
+            <li><a href="javascript:;" >2F</a> <a href="javascript:;" class="etitle">floor2</a></li>
+            <li><a href="javascript:;" >3F</a> <a href="javascript:;" class="etitle">floor3</a></li>
+            <li><a href="javascript:;" >4F</a> <a href="javascript:;" class="etitle">floor4</a></li>
+            <li><a href="javascript:;" >5F</a> <a href="javascript:;" class="etitle">floor5</a></li>
+        </ul>
+    </div>
+	<div class="footer">
+		<h1>Footer</h1>
+	</div>
+    <script type="text/javascript" src="jquery-1.9.0.min.js"></script>
+    <script type="text/javascript" src="elevator.js"></script>
+ </body>
+</html>
