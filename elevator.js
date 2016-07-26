@@ -3,15 +3,17 @@ $(function() {
   	var loading = new Array();
 	var b = [];
 	var conTop = $(".floor-list").offset().top;
-	var rangetop = [];
+	var rangetop = [];var jump = false;
 	var hh = $(window).height();
 	$(".lazy-floor").each(function(a) {
-		var e = $(this);
-		loading[a] = false;
-		e.index = a;
-		rangetop[a] = [];
-		rangetop[a]['s'] = e.offset().top;
-		rangetop[a]['e'] = e.offset().top + hh + e.height();//距离顶部高度 + 屏幕高度 + 自身div高度 （从出现到完全消失的距离 ）
+		if(!jump){
+			var e = $(this);
+			loading[a] = false;
+			e.index = a;
+			rangetop[a] = [];
+			rangetop[a]['s'] = e.offset().top;
+			rangetop[a]['e'] = e.offset().top + hh + e.height();//距离顶部高度 + 屏幕高度 + 自身div高度 （从出现到完全消失的距离 ）
+		}
 	});
 	window.onscroll = function() {
 		var scrt = $(window).scrollTop();
@@ -31,14 +33,30 @@ $(function() {
 	};
 	$(".elevator li").each(function(a) {
 		$(this).click(function() {
+			jump = true;b = [];
 			$("html,body").animate({
 				scrollTop: $(".lazy-floor").eq(a).offset().top  + "px"
-			}, 1000);
+			}, 1000,'',function(){
+				var scrt = $(window).scrollTop();
+				(scrt > conTop-hh) ? $(".elevator").fadeIn("slow") : $(".elevator").fadeOut("slow");
+				for(var i=0;i<rangetop.length;i++){
+					var dst = $(document).scrollTop();
+					if(rangetop[i]['e'] >  dst + hh  && dst + hh + 100 > rangetop[i]['s'] ){ // 出现在屏幕前 加载楼层内容
+						addFloor($(".lazy-floor").eq(i),i);
+					}
+				}
+				jump = false;
+			});
 		})
 	});
 	window.onload = window.onresize = function() {
-		conTop < hh+$(document).scrollTop() ? $(".elevator").fadeIn("slow") : $(".elevator").fadeOut("slow");
-		$(window).scroll();
+		if(conTop < hh+$(document).scrollTop()){ 
+			$(".elevator").fadeIn("slow");
+			$(window).scroll()
+		}else{
+			$(".elevator").fadeOut("slow")
+			
+		};
 	}
 	/*end*/
 
